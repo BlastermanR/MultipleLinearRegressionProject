@@ -11,25 +11,25 @@ import sklearn # Used for multiple linear regression functions
 ####################################################################
 
 # Prints the contents of the /inputs sub directory
-def printInputFiles(): 
-    input_csv_path = os.getcwd() + "/inputs" # Specifies /input folder from executable directory
-    # Throw error if folder does not exist
-    if not os.path.exists(input_csv_path):
-        raise FileNotFoundError(f"The folder '{input_csv_path}' does not exist.")
+# Return Array of files to read
+def printInputFiles(input_csv_path): 
+    files = []
     # Print the CSV Files to be read
     print ("Reading Files:")
     for name in os.listdir(input_csv_path):
         if name.lower().endswith('.csv'):
+            files.append(name)
             print(name)
+    return files
 
 # Reads csv files in the input directory
-# Return array containing Data
-def readFiles(input_path):
+# Return dictionary containing data
+def readInputFiles(input_csv_path):
     data = {} # Store Data
 
     # Loop through each file in the folder
-    for file_name in os.listdir(input_path):
-        file_path = os.path.join(input_path, file_name)
+    for file_name in os.listdir(input_csv_path):
+        file_path = os.path.join(input_csv_path, file_name)
         # Check if the file is a CSV file
         if file_name.endswith('.csv'):
             # Read the CSV file into a Pandas DataFrame
@@ -41,7 +41,14 @@ def readFiles(input_path):
     return data
 
 def main():
-    printInputFiles() # Execute this inside the CWD.
+    inputPath = os.getcwd() + "/inputs" # Specifies /input folder from executable directory
+    
+    # Throw error if folder does not exist
+    if not os.path.exists(inputPath):
+        raise FileNotFoundError(f"The folder '{inputPath}' does not exist.")
+    
+    files = printInputFiles(inputPath)
+    parameters = readInputFiles(inputPath)
 
 if __name__ == "__main__":
     main()
