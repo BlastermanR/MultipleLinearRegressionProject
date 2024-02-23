@@ -1,12 +1,12 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import os
-import sklearn
+import numpy as np # Linear algebra
+import pandas as pd # Sata processing, CSV file I/O (e.g. pd.read_csv)
+import os # Used for obtaining path
+import sklearn # Used for multiple linear regression functions
     
 ####################################################################
 # Links:
 # Data Set: https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality?resource=download
-# 
+# Tutorial Used: https://www.geeksforgeeks.org/multiple-linear-regression-with-scikit-learn/
 #
 ####################################################################
 
@@ -34,6 +34,8 @@ def readFiles(input_path):
         if file_name.endswith('.csv'):
             # Read the CSV file into a Pandas DataFrame
             df = pd.read_csv(file_path)
+            # Drop the first column containing the Entry IDs
+            df.drop(df.columns[0], axis=1, inplace=True)
             # Store the DataFrame in the dictionary with the file name as the key
             data[file_name] = df
     return data
