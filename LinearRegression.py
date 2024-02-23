@@ -7,7 +7,7 @@ import sklearn # Used for multiple linear regression functions
 # Links:
 # Data Set: https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality?resource=download
 # Tutorial Used: https://www.geeksforgeeks.org/multiple-linear-regression-with-scikit-learn/
-#
+# SKLearn Install: https://scikit-learn.org/stable/install.html
 ####################################################################
 
 # Prints the contents of the /inputs sub directory
