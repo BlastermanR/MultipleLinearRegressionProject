@@ -1,10 +1,15 @@
 This Project is Ryan Massie and Ben Starlings Submission for the multiple Linear Regression Project:
 When Running the project should be structured as follows:
 //Project
+
 LinearRegression.py
+  
   // inputs
+    
     ---.csv
+    
     ---.csv
+    
     ---.csv
 
 Example Structure:
