@@ -2,10 +2,14 @@ import numpy as np # Linear algebra
 import pandas as pd # Sata processing, CSV file I/O (e.g. pd.read_csv)
 import os # Used for obtaining path
 import sklearn # Used for multiple linear regression functions
-    
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegression 
+from sklearn.metrics import mean_squared_error, mean_absolute_error 
+from sklearn import preprocessing 
+
 ####################################################################
 # Links:
-# Data Set: https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality?resource=download
+# Data Set: https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality?resource=download ## QUALITY CHANGED TO 1 = Good, 0 = Bad
 # Tutorial Used: https://www.geeksforgeeks.org/multiple-linear-regression-with-scikit-learn/
 # SKLearn Install: https://scikit-learn.org/stable/install.html
 ####################################################################
@@ -40,6 +44,15 @@ def readInputFiles(input_csv_path):
             data[file_name] = df
     return data
 
+# Prints table
+def printData(metrics):
+    i = 1
+    for file_name in metrics:
+        print("Dataset #" + str(i) + ":")
+        i += 1
+        print(metrics[file_name])
+    return
+
 def main():
     inputPath = os.getcwd() + "/inputs" # Specifies /input folder from executable directory
     
@@ -48,7 +61,32 @@ def main():
         raise FileNotFoundError(f"The folder '{inputPath}' does not exist.")
     
     files = printInputFiles(inputPath)
-    parameters = readInputFiles(inputPath)
+    metrics = readInputFiles(inputPath)
+    #printData(metrics)
+
+    for file_name in metrics:
+    # Create feature variables
+    # Dependant Variable
+        y = metrics[file_name].iloc[:, -1]
+    # Independant Variables
+        X = metrics[file_name].iloc[:,:-1]
+    
+    # Creating train and test sets 
+    X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=101) 
+
+    print(X)
+    print(y)
+    # Create model
+    model = LinearRegression()
+    model.fit(X_train,y_train)
+
+    # Make predictions 
+    predictions = model.predict(X_test) 
+
+    # model evaluation 
+    print( 'mean_squared_error : ', mean_squared_error(y_test, predictions)) 
+    print( 'mean_absolute_error : ', mean_absolute_error(y_test, predictions)) 
+
 
 if __name__ == "__main__":
     main()
