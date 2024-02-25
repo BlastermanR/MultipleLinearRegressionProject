@@ -40,8 +40,9 @@ def readInputFiles(input_csv_path):
         if file_name.endswith('.csv'):
             # Read the CSV file into a Pandas DataFrame
             df = pd.read_csv(file_path)
-            # Drop the first column containing the Entry IDs
-            df.drop(df.columns[0], axis=1, inplace=True)
+            # Drop the first column containing the Entry IDs if present
+            if (df.columns[0].find("A_id") != -1 or df.columns[0].find("No") != -1):
+                df.drop(df.columns[0], axis=1, inplace=True)
             # Store the DataFrame in the dictionary with the file name as the key
             data[file_name] = df
     return data
